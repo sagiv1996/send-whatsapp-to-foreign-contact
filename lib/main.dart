@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:io' show Platform;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Center(
         child: //
             InternationalPhoneNumberInput(
-          locale: 'il',
+          initialValue: PhoneNumber(isoCode: Platform.localeName.split('_')[1]),
           onInputChanged: (phoneNumber) {
             setState(() {
               this.phoneNumber = phoneNumber.toString();
