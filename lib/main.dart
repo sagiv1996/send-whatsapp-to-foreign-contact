@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'dart:io' show Platform;
 
 void main() {
@@ -11,7 +12,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,51 +55,70 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromRGBO(18, 140, 126, 0.7),
-            Color.fromRGBO(7, 94, 84, 0.6),
-            Color.fromRGBO(37, 211, 102, 1),
-            Color.fromRGBO(52, 183, 241, 0.7),
-          ],
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-        ),
-      ),
-      child: Center(
-        child: //
-            InternationalPhoneNumberInput(
-          initialValue: PhoneNumber(isoCode: Platform.localeName.split('_')[1]),
-          onInputChanged: (phoneNumber) {
-            setState(() {
-              this.phoneNumber = phoneNumber.toString();
-            });
-          },
-          // Add this value because onInputChanged is required
-          onInputValidated: (bool isValid) async {
-            if (isValid) {
-              setState(() {
-                this.isValid = isValid;
-              });
-              sendAWhatsappMessage();
-            }
-          },
-          onFieldSubmitted: (phoneNumber) {
-            setState(() {
-              this.phoneNumber = phoneNumber;
-              sendAWhatsappMessage();
-            });
-          },
-          selectorConfig: SelectorConfig(
-              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-              useEmoji: true,
-              showFlags: true),
-          autoValidateMode: AutovalidateMode.onUserInteraction,
-          selectorTextStyle: TextStyle(color: Colors.black),
-          inputBorder: OutlineInputBorder(),
-        ),
-      ),
-    ));
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(18, 140, 126, 0.3),
+                  Color.fromRGBO(7, 94, 84, 0.6),
+                  Color.fromRGBO(37, 211, 102, 1),
+                  Color.fromRGBO(52, 183, 241, 0.7),
+                ],
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                ListTile(
+                    title: new Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(bottom: 0),
+                      child: AutoSizeText("Enter a phone number",
+                          maxLines: 1, minFontSize: 35),
+                    )),
+                    subtitle: new Center(
+                      child: AutoSizeText(
+                        "we do not share your information with anyone",
+                        maxLines: 1,
+                        minFontSize: 15,
+                      ),
+                    )),
+                InternationalPhoneNumberInput(
+                  initialValue:
+                      PhoneNumber(isoCode: Platform.localeName.split('_')[1]),
+                  onInputChanged: (phoneNumber) {
+                    setState(() {
+                      this.phoneNumber = phoneNumber.toString();
+                    });
+                  },
+                  onInputValidated: (bool isValid) async {
+                    if (isValid) {
+                      setState(() {
+                        this.isValid = isValid;
+                      });
+                      sendAWhatsappMessage();
+                    }
+                  },
+                  onFieldSubmitted: (phoneNumber) {
+                    setState(() {
+                      this.phoneNumber = phoneNumber;
+                      sendAWhatsappMessage();
+                    });
+                  },
+                  selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                      useEmoji: true,
+                      showFlags: true),
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
+                  selectorTextStyle: TextStyle(color: Colors.black),
+                  inputBorder: OutlineInputBorder(),
+                ),
+                Center(
+                  child: Text(
+                      'Note: You can also enter phone numbers with spaces and dashes.'),
+                )
+              ],
+            )));
   }
 }
