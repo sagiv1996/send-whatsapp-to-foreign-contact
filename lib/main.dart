@@ -106,10 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       sendAWhatsappMessage();
                     });
                   },
-                  // selectorConfig: SelectorConfig(
-                  //     // selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                  //     // useEmoji: true,
-                  //     // showFlags: true),
+                  selectorConfig: SelectorConfig(
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                      useEmoji: true,
+                      showFlags: true),
                   autoValidateMode: AutovalidateMode.onUserInteraction,
                   selectorTextStyle: TextStyle(color: Colors.black),
                   inputBorder: OutlineInputBorder(),
