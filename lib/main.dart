@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -38,24 +38,27 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> sendAWhatsappMessage() async {
     if (!isValid) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: new Text('The phone number is not a valid.')));
+          const SnackBar(content: Text('The phone number is not a valid.')));
       return;
     }
     try {
       await launchUrl(getUriToWhatsApp());
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: new Text('The system failed to open WhatsApp')));
+          const SnackBar(content: Text('The system failed to open WhatsApp')));
     }
   }
 
   Uri getUriToWhatsApp() => Uri.parse('whatsapp://send?phone=$phoneNumber');
 
+  PhoneNumber initialPhoneNumber =
+      PhoneNumber(isoCode: Platform.localeName.split('_').last);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color.fromRGBO(18, 140, 126, 0.3),
@@ -70,14 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                ListTile(
-                    title: new Center(
+                const ListTile(
+                    title: Center(
                         child: Padding(
-                      padding: const EdgeInsets.only(bottom: 0),
+                      padding: EdgeInsets.only(bottom: 0),
                       child: AutoSizeText("Enter a phone number",
                           maxLines: 1, minFontSize: 35),
                     )),
-                    subtitle: new Center(
+                    subtitle: Center(
                       child: AutoSizeText(
                         "we do not share your information with anyone",
                         maxLines: 1,
@@ -85,8 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     )),
                 InternationalPhoneNumberInput(
-                  initialValue:
-                      PhoneNumber(isoCode: Platform.localeName.split('_')[1]),
+                  initialValue: initialPhoneNumber,
                   onInputChanged: (phoneNumber) {
                     setState(() {
                       this.phoneNumber = phoneNumber.toString();
@@ -106,15 +108,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       sendAWhatsappMessage();
                     });
                   },
-                  selectorConfig: SelectorConfig(
-                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                      useEmoji: true,
-                      showFlags: true),
-                  autoValidateMode: AutovalidateMode.onUserInteraction,
-                  selectorTextStyle: TextStyle(color: Colors.black),
-                  inputBorder: OutlineInputBorder(),
+                  selectorConfig: const SelectorConfig(
+                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                    useEmoji: true,
+                    showFlags: true,
+                  ),
+                  // autoValidateMode: AutovalidateMode.onUserInteraction,
+                  selectorTextStyle: const TextStyle(color: Colors.black),
+                  inputBorder: const OutlineInputBorder(),
                 ),
-                Center(
+                const Center(
                   child: Text(
                       'Note: You can also enter phone numbers with spaces and dashes.'),
                 )
