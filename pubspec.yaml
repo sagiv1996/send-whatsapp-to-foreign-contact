@@ -30,6 +30,7 @@ dependencies:
   intl_phone_number_input: ^0.7.0+2
   url_launcher: ^6.1.5
   auto_size_text: ^3.0.0
+  receive_sharing_intent: ^1.4.5
   flutter:
     sdk: flutter
 

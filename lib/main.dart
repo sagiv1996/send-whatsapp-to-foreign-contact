@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'dart:io' show Platform;
 
 void main() {
@@ -34,6 +37,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String? phoneNumber;
   bool isValid = false;
+  PhoneNumber initialPhoneNumber =
+      PhoneNumber(isoCode: Platform.localeName.split('_').last);
+
+  @override
+  void initState() {
+    super.initState();
+
+    ReceiveSharingIntent.getInitialText().then((String? value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        initialPhoneNumber = PhoneNumber(
+            phoneNumber: value, isoCode: Platform.localeName.split('_').last);
+      });
+    });
+  }
 
   Future<void> sendAWhatsappMessage() async {
     if (!isValid) {
@@ -50,9 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Uri getUriToWhatsApp() => Uri.parse('whatsapp://send?phone=$phoneNumber');
-
-  PhoneNumber initialPhoneNumber =
-      PhoneNumber(isoCode: Platform.localeName.split('_').last);
 
   @override
   Widget build(BuildContext context) {
