@@ -108,13 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   initialValue: initialPhoneNumber,
                   onInputChanged: (phoneNumber) {
                     setState(() {
-                      this.phoneNumber = phoneNumber.toString();
+                      this.phoneNumber = phoneNumber.phoneNumber;
                     });
                   },
                   onInputValidated: (bool isValid) async {
                     if (isValid) {
                       setState(() {
                         this.isValid = isValid;
+                        /**/
                       });
                       sendAWhatsappMessage();
                     }
