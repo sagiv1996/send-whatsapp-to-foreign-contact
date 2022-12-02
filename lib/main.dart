@@ -137,7 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 const Center(
                   child: Text(
-                      'Note: You can also enter phone numbers with spaces and dashes.'),
+                      'Note: You can also enter phone numbers with spaces and dashes.',
+                  textAlign: TextAlign.center,)
                 )
               ],
             )));
